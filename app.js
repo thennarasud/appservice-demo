@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 // const cors = require("cors");
 // const auth = require("./router/auth");
 const mongoose = require("mongoose");
+const path = require('path');
 
 // Create an instance of Express
 const app = express();
@@ -24,6 +25,11 @@ const mongoURI = process.env.MONGODB_URI || 'mongodb://ckcosmosdb:88gzkeJgEZjdRt
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+// Pass index.html:
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Define a user schema
 const userSchema = new mongoose.Schema({
